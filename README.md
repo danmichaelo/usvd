@@ -14,6 +14,14 @@ derfra (`usvd.xml`) på epost fra Gunvald 30. juni 2014.
 * `usvd.ttl` : Registeret konvertert til RDF og serialisert som Turtle.
 * `convert.xq` : XQuery-script for å konvertere `usvd.xml` til RDF.
 
+
++### Konvertering
+
+Har du Zorba installert kan du kjøre
+
+- `make clean && make` for å konvertere til RDF.
+- `make solr` for å generere JSON-dokumenter til indeksering i SOLR fra Turtle-filene.
+
 ### Konverteringsprosessen
 
 I registerfilen er hver term angitt som et `<post>`-element. Dette har
@@ -81,17 +89,6 @@ implementert i `convert.xq`. Vi bruker hovedsakelig
 * Elementet `<underemnefrase>` ignoreres. Jeg er usikker på feltets betydning,
   og det er bare [brukt 22 ganger](https://gist.github.com/danmichaelo/fb3afc5ab9a161dfae7d)
   (Listen er generert av `list_underemnefrase.xq`).
-
-### Bruk:
-
-XQuery-scriptet kan kjøres med f.eks. [Zorba](http://www.zorba.io/):
-
-    $ zorba -i convert.xq >| usvd.rdf.xml
-
-Konvertering fra RDF/XML til RDF/Turtle kan gjøres med f.eks.
-[Rapper](http://librdf.org/raptor/rapper.html):
-
-    $ rapper -i rdfxml -o turtle usvd.rdf.xml >| usvd.ttl
 
 ### Lisens
 
