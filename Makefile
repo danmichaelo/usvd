@@ -1,34 +1,32 @@
-.PHONY: ttl solr clean
-.DEFAULT_GOAL := ttl
+.PHONY: rdf solr clean
+.DEFAULT_GOAL := rdf
 
-ttl: usvd.ttl
-solr: usvd_solr.json
-
-usvd_solr.json: usvd.ttl
-	python ./tools/ttl2solr.py -v usvd.ttl usvd_solr.json
-
-usvd.ttl: usvd.tmp.ttl
-	rm -f skosify.log
-	python ./tools/skosify-sort.py -b 'http://data.ub.uio.no/' -o usvd.ttl vocabulary.ttl usvd.tmp.ttl
-
-usvd.tmp.ttl: usvd.rdf.xml
-	rapper -i rdfxml -o turtle usvd.rdf.xml >| usvd.tmp.ttl
-
-usvd.rdf.xml: tools usvd.xml
-	cd tools && \
-	git pull && \
-	cd .. && \
-    zorba -i tools/emneregister2rdf.xq -e "base:=usvd" -e "scheme:=http://data.ub.uio.no/usvd" -e "file:=../usvd.xml" >| usvd.rdf.xml
+rdf: data/usvd.ttl
+solr: solr/usvd.json
 
 tools:
 	git clone https://github.com/danmichaelo/ubdata-tools.git tools
 
-#usvd.xml:
+toolsupdate:
+	# Use this as an order-only prerequisite
+	cd tools && git pull && cd ..
+
+data/usvd.ttl: data/usvd.rdf.xml tools/.git/refs/heads/master | toolsupdate
+	rm -f skosify.log
+	python ./tools/skosify-sort.py -b 'http://data.ub.uio.no/' -o ./data/usvd.ttl vocabulary.ttl ./data/usvd.rdf.xml
+
+data/usvd.rdf.xml: data/usvd.xml tools tools/.git/refs/heads/master | toolsupdate
+	zorba -i ./tools/emneregister2rdf.xq -e "base:=usvd" -e "scheme:=http://data.ub.uio.no/usvd" -e "file:=../data/usvd.xml" >| ./data/usvd.rdf.xml
+
+#data/usvd.xml:
 #	<eksporteres ikke automatisk fra bibsys enda>
-#    wget -nv -O usvd.xml http://www.bibsys.no/files/out/humordsok/USVDregister.xml
+#	curl -s -o ./data/usvd.xml http://www.bibsys.no/files/out/usvdsok/USVDregister.xml
+
+solr/usvd.json: rdf tools/.git/refs/heads/master | toolsupdate
+	python ./tools/ttl2solr.py -v ./data/usvd.ttl ./solr/usvd.json
 
 clean:
-	rm -f skosify.log
-	rm -f usvd.rdf.xml
-	rm -f usvd.ttl
-	rm -f usvd.tmp.ttl
+	rm -f ./skosify.log
+	rm -f ./data/usvd.rdf.xml
+	rm -f ./data/usvd.ttl
+	rm -f ./data/usvd.tmp.ttl
