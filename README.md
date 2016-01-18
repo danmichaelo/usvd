@@ -10,17 +10,29 @@ Registeret er søkbart på <http://wgate.bibsys.no/search/pub?base=USVDEMNE>.
 Det vedlikeholdes i BIBSYS' emnemodul, og vi har fått en XML-eksport
 derfra (`usvd.xml`) på epost fra Gunvald 30. juni 2014.
 
-* `usvd.xml` : Registeret som eksportert fra BIBSYS' emnemodul.
-* `usvd.ttl` : Registeret konvertert til RDF og serialisert som Turtle.
-* `convert.xq` : XQuery-script for å konvertere `usvd.xml` til RDF.
+* `src/usvd.xml` : Source data from BIBSYS' emnemodul.
+* `dist/usvd.ttl` : Converted to RDF Turtle.
+* `dist/usvd.marc21.ttl` : Converted to MARC21 XML.
 
 
-+### Konvertering
+### Conversion
 
-Har du Zorba installert kan du kjøre
+Authority data is currently maintained in Bibsys and converted to
+JSON (RoaldIII data model) using [RoaldIII](https://github.com/realfagstermer/roald).
+RoaldIII is also used to mix in mappings before exporting
+RDF/SKOS and MARC21.
 
-- `make clean && make` for å konvertere til RDF.
-- `make solr` for å generere JSON-dokumenter til indeksering i SOLR fra Turtle-filene.
+The conversion is done by running `python publish.py`, which only
+runs a conversion if any of the source files have changed. You
+can run `python publish.py -f` to force a conversion even if no
+source files have changed (useful during development).
+
+Please see the RoaldIII repo for more details on the conversion.
+
+The RoaldIII JSON data is found in `usvd.json`.
+Complete, distributable RDF/SKOS and MARC21 files are found in the
+`dist` folder.
+
 
 ### Konverteringsprosessen
 
