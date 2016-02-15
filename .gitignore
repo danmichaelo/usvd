@@ -1,6 +1,8 @@
-usvd.rdf.xml
-usvd.xml
-usvd.tmp.ttl
-skosify.log
+*.log
 tools
 solr/usvd.json
+*.zip
+*.db
+*.bz2
+*.etag
+dumps/
