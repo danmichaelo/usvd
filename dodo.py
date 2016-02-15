@@ -93,8 +93,7 @@ def task_build():
         'targets': [
             '%s.json' % config['basename'],
             'dist/%s.marc21.xml' % config['basename'],
-            'dist/%s.ttl' % config['basename'],
-            'dist/%s.complete.ttl' % config['basename']
+            'dist/%s.ttl' % config['basename']
         ]
     }
 
@@ -106,8 +105,7 @@ def task_build():
 def task_publish_dumps():
     return data_ub_tasks.publish_dumps_task_gen(config['dumps_dir'], [
         '%s.marc21.xml' % config['basename'],
-        '%s.ttl' % config['basename'],
-        '%s.complete.ttl' % config['basename']
+        '%s.ttl' % config['basename']
     ])
 
 

@@ -4,5 +4,6 @@ solr/usvd.json
 *.zip
 *.db
 *.bz2
+*.pyc
 *.etag
 dumps/
