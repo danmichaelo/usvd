@@ -55,7 +55,7 @@ def task_build():
     def build_dist(task):
         logger.info('Building new dist')
         roald = Roald()
-        roald.load('src/usvd.xml', format='bibsys', language='nb')
+        roald.load('src/usvd.xml', format='bibsys', language='nb', exclude_underemne=True)
         roald.set_uri_format(
             'http://data.ub.uio.no/%s/c{id}' % config['basename'])
         roald.save('%s.json' % config['basename'])
