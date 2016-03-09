@@ -70,7 +70,7 @@ def task_build():
         # 1) MARC21
         marc21options = {
             'vocabulary_code': 'usvd',
-            'created_by': 'NoOU'
+            'created_by': 'No-TrBIB'
         }
         roald.export('dist/%s.marc21.xml' %
                      config['basename'], format='marc21', **marc21options)
