@@ -30,6 +30,7 @@ usvd: a skos:ConceptScheme ;
         <http://data.ub.uio.no/dumps/usvd.ttl> ;
     void:uriSpace "http://data.ub.uio.no/usvd/" ;
     void:exampleResource <http://data.ub.uio.no/usvd/c39094> ;
+    void:uriSpace "http://data.ub.uio.no/usvd/" ;
     void:vocabulary skos: .
 
 library:k a foaf:Organization ;
