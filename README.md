@@ -7,8 +7,9 @@ som UBOs kjederegister til Dewey, tidligere kjent som UBO/SV's kjederegister
 til Dewey, derav akronymet USVD som fremdeles brukes.
 
 Registeret er søkbart på <http://wgate.bibsys.no/search/pub?base=USVDEMNE>.
-Det vedlikeholdes i BIBSYS' emnemodul, og vi har fått en XML-eksport
-derfra (`usvd.xml`) på epost fra Gunvald 30. juni 2014.
+Frem til juni 2019 ble det vedlikeholdt i BIBSYS' emnemodul.
+Vi har fått uregelmessige XML-eksporter derfra (`src/usvd.xml`) på epost.
+Da basen ble stengt ned i juni 2019 fikk vi en siste eksport.
 
 * `src/usvd.xml` : Source data from BIBSYS' emnemodul.
 * `dist/usvd.ttl` : Converted to RDF Turtle.
