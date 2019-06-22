@@ -65,8 +65,12 @@ implementert i `convert.xq`. Vi bruker hovedsakelig
 
 #### Foreløpig håndtering av klassifikasjonskoder (Dewey-notasjon)
 
-* Klassifikasjonskode (Dewey-notasjon) legges i `skos:notation`, med
-  datatype `<http://dewey.info/schema-terms/Notation>`, ikke som mappinger.
+* Klassifikasjonskode (Dewey-notasjon) legges foreløpig i `skos:notation`, med
+  datatype `<http://dewey.info/schema-terms/Notation>`.
+  Det kan være det hadde vært bedre å modellere disse som mappinger, men
+  hvis de skal mappes til siste utgave av Dewey bør vi nok ta en gjennomgang
+  av dem, siden det er brukt ulike utgaver av Dewey, og det er generelt ikke
+  registrert hvilken utgave som er brukt (i noen poster er det ført inn i notefeltet).
 
 * Alle tegn utenom tall, punktum og bindestrek fjernes.
   Eksempelvis blir «005.133Basi» konvertert til «005.133»
@@ -75,7 +79,7 @@ implementert i `convert.xq`. Vi bruker hovedsakelig
   ([USVD45296](http://wgate.bibsys.no/gate1/SHOW?objd=USVD45296&base=USVDEMNE)),
   og «372.1103/kl» til «372.1103»
   ([USVD45366](http://wgate.bibsys.no/gate1/SHOW?objd=USVD45366&base=USVDEMNE)).
-  Hvis færre enn tre gyldige tegn gjenstår utelates feltet.
+  Hvis færre enn tre gyldige tegn gjenstår, utelates feltet.
   Dette er sannsynligvis feilinnførsler. Se f.eks.
   [USVD34368](http://wgate.bibsys.no/gate1/SHOW?objd=USVD34368&base=USVDEMNE)
   der «Tai språk (språkgruppe)» er fylt inn i feltet for klassifikasjonskode.
