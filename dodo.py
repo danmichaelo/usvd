@@ -56,6 +56,7 @@ def task_build():
 
         from rdflib import URIRef
         from rdflib.namespace import SKOS
+        import re
 
         logger.info('Building new dist')
         roald = Roald()
@@ -84,7 +85,8 @@ def task_build():
         prepared = roald.prepare_export('rdfskos', include=includes)
         g = prepared.prepared_data['graph']
         for tr in g.triples((None, SKOS.notation, None)):
-            g.add((tr[0], SKOS.exactMatch, URIRef('http://dewey.info/class/%s/e23/' % tr[2].replace(' ', ''))))
+            ddc = re.sub('[^0-9.-]', '', tr[2])
+            g.add((tr[0], SKOS.exactMatch, URIRef('http://dewey.info/class/%s/e23/' % ddc)))
         prepared.write(filename)
         logger.info('Wrote %s', filename)
 
