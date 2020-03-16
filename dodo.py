@@ -1,7 +1,6 @@
 # encoding=utf8
 from doit import get_var
 from roald import Roald
-
 import logging
 import logging.config
 logging.config.fileConfig('logging.cfg', )
@@ -54,6 +53,10 @@ config = {
 def task_build():
 
     def build_dist(task):
+
+        from rdflib import URIRef
+        from rdflib.namespace import SKOS
+
         logger.info('Building new dist')
         roald = Roald()
         roald.load('src/usvd.xml', format='bibsys', language='nb', exclude_underemne=True)
@@ -77,11 +80,13 @@ def task_build():
         logger.info('Wrote dist/%s.marc21.xml', config['basename'])
 
         # 2) RDF (core)
-        roald.export('dist/%s.ttl' % config['basename'],
-                     format='rdfskos',
-                     include=includes
-                     )
-        logger.info('Wrote dist/%s.core.ttl', config['basename'])
+        filename = 'dist/%s.ttl' % config['basename']
+        prepared = roald.prepare_export('rdfskos', include=includes)
+        g = prepared.prepared_data['graph']
+        for tr in g.triples((None, SKOS.notation, None)):
+            g.add((tr[0], SKOS.exactMatch, URIRef('http://dewey.info/class/%s/e23/' % tr[2].replace(' ', ''))))
+        prepared.write(filename)
+        logger.info('Wrote %s', filename)
 
     return {
         'doc': 'Build distribution files (RDF/SKOS + MARC21XML) from source files',
